@@ -40,6 +40,10 @@ except:
 # output = f"{DES}/300VW.zip"
 # gdown.download(url=url, output=output, quiet=False, fuzzy=True)
 
-url = "https://drive.google.com/file/d/1_szB20Pvxvskg1xULj8KlggfjdxVbdWf/view?usp=sharing"
-output = f"{DES}/AFLW2000_3D.zip"
+# url = "https://drive.google.com/file/d/1_szB20Pvxvskg1xULj8KlggfjdxVbdWf/view?usp=sharing"
+# output = f"{DES}/AFLW2000_3D.zip"
+# gdown.download(url=url, output=output, quiet=False, fuzzy=True)
+
+url = "https://drive.google.com/file/d/1YoV7cBpbwsykOQCOS0m5TjeGW4n5YhG8/view?usp=sharing"
+output = f"{DES}/helen_image.zip"
 gdown.download(url=url, output=output, quiet=False, fuzzy=True)

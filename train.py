@@ -21,9 +21,9 @@ base_name = 'EfficientNetV1B1'
 final_dropout = 0.3
 n_landmark = 68
 
-make_augment = True
+make_augment = False
 rot_angle = 30
-save_sample = 10
+save_sample = 0
 
 train_with_labels = True
 train_repeat = True

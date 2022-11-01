@@ -35,7 +35,7 @@ def preprocess_img(path, target_size):
 im_size = 192
 img_size = (im_size, im_size)
 
-img_path = '/home/lap14880/hieunmt/face_landmark/sample/2.jpg'
+img_path = '/home/lap14880/hieunmt/face_landmark/sample/4.jpg'
 
 img = preprocess_img(img_path, img_size)
 

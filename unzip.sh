@@ -7,3 +7,4 @@
 # unzip download/WFLW.zip -d download
 # unzip download/300VW.zip -d download
 # unzip download/AFLW2000_3D.zip -d download
+unzip download/helen_image.zip -d download

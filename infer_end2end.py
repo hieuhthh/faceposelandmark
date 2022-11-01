@@ -132,7 +132,7 @@ class InferFacePose:
 
     def predict_marks(self, img):
         img_batch = tf.expand_dims(img, 0)
-        pred = self.model.predict(img_batch)
+        pred = self.model.predict(img_batch, verbose=0)
         marks = np.array(pred[0]) * self.im_size
         """
         return array (68, 2)
@@ -180,7 +180,7 @@ class InferFacePose:
         
         return(point_2d[2], k)
 
-    def predict_angle(self, img):
+    def predict_angle(self, img, get_view_point=False):
         """
         return ang_vertical, ang_horizon
         angle (degree)
@@ -232,8 +232,11 @@ class InferFacePose:
         except:
             ang_horizon = 90
 
-        ang_vertical /= -2
-        ang_horizon /= 2
+        ang_vertical /= -4
+        ang_horizon /= 4
+
+        if get_view_point:
+            return ang_vertical, ang_horizon, ang_rot, p1, p2
 
         return ang_vertical, ang_horizon, ang_rot
 
@@ -254,12 +257,13 @@ if __name__ == '__main__':
     # weight = '/home/lap14880/hieunmt/face_landmark/save_model/best_model_face_pose_esti_192_68_aug.h5'
     # weight = '/home/lap14880/hieunmt/face_landmark/save_model/best_model_face_pose_esti_192_68_noaug_mid512.h5'
     # weight = '/home/lap14880/hieunmt/face_landmark/save_model/best_model_face_pose_esti_EfficientNetV1B1_192_68_4epoch.h5'
-    weight = '/home/lap14880/hieunmt/face_landmark/save_model/best_model_face_pose_esti_EfficientNetV1B1_192_68_100epoch.h5'
+    # weight = '/home/lap14880/hieunmt/face_landmark/save_model/best_model_face_pose_esti_EfficientNetV1B1_192_68_100epoch.h5'
+    weight = '/home/lap14880/hieunmt/face_landmark/save_model/best_model_face_pose_esti_EfficientNetV1B1_192_68_100epoch_aug.h5'
 
     infer_face_pose = InferFacePose(im_size, weight)
 
-    # img_path = '/home/lap14880/hieunmt/face_landmark/sample/1.jpg'
-    img_path = '/home/lap14880/hieunmt/face_landmark/nhutsample/hh3.png'
+    # img_path = '/home/lap14880/hieunmt/face_landmark/sample/4.jpg'
+    img_path = '/home/lap14880/hieunmt/face_landmark/nhutsample/nhut1.png'
 
     img = infer_face_pose.preprocess_img(img_path)
     marks = infer_face_pose.predict_marks(img)
@@ -268,6 +272,7 @@ if __name__ == '__main__':
     import time
 
     start = time.time()
+    # ang_vertical, ang_horizon, ang_rot, p1, p2 = infer_face_pose.predict_angle(img, get_view_point=True)
     ang_vertical, ang_horizon, ang_rot = infer_face_pose.predict_angle(img)
     dur = time.time() - start
     print('time:', dur)
@@ -288,6 +293,9 @@ if __name__ == '__main__':
 
     img = np.array(img) * 255
     img_write = infer_face_pose.draw_marks(img, marks)
+
+    # cv2.line(img_write, p1, p2, (255,255,255), 2)
+    
     cv2.imwrite(f"/home/lap14880/hieunmt/face_landmark/infer_e2e/infer_e2e_ori.jpg", img)  
     cv2.imwrite(f"/home/lap14880/hieunmt/face_landmark/infer_e2e/infer_e2e_landmark.jpg", img_write) 
 
